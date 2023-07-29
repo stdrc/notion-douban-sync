@@ -8,8 +8,8 @@ load_dotenv()
 
 douban_cookie = os.getenv("DOUBAN_COOKIE")
 origin = "https://book.douban.com"
-rate_url_tpl = "{origin}/j/subject/{}/interest"
-referer_url_tpl = "{origin}/subject/{}/"
+rate_url_tpl = "https://book.douban.com/j/subject/{}/interest"
+referer_url_tpl = "https://book.douban.com/subject/{}/"
 
 
 def rate(douban_id: str, rating: int, comment: str) -> bool:
