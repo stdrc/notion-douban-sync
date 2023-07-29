@@ -31,7 +31,7 @@ node get_notion_reviews.js movie <database_id>
 
 这里 `movie` 可以改成 `book`。脚本假设数据库 schema 和 [我的](https://stdrc.notion.site/d0f220b2c9a741849b6991de22151ae3) 一致，如果不一致，可以自行修改脚本或者用其它方式导出为兼容的 JSON 文件。
 
-JSON 文件的形如：
+JSON 文件形如：
 
 ```json
 [
