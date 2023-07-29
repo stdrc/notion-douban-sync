@@ -1,0 +1,10 @@
+{
+    "name": "notion-douban-sync",
+    "type": "module",
+    "version": "1.0.0",
+    "description": "",
+    "dependencies": {
+        "@notionhq/client": "^1.0.1",
+        "dotenv": "^16.3.1"
+    }
+}
