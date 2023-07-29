@@ -20,7 +20,7 @@ def rate(douban_id: str, rating: int, comment: str) -> bool:
         "Content-Type": "application/x-www-form-urlencoded",
         "Origin": origin,
         "Referer": referer_url,
-        "User-Agent": "Mozilla/5.0 (Linux; Android 10; Redmi K30 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.210 Mobile Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
         "X-Requested-With": "XMLHttpRequest",
     }
     resp = requests.post(
