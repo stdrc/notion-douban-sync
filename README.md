@@ -14,7 +14,7 @@ cd notion-douban-sync
 npm install
 
 # 安装 Python 依赖
-python -m venv .venv
+python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -51,13 +51,13 @@ JSON 文件形如：
 ### 同步评价到豆瓣
 
 ```sh
-python sync_to_douban.py --dry-run movie
+python3 sync_to_douban.py --dry-run movie
 ```
 
 注意这里加了 `--dry-run` 表示只打印到控制台，不真的请求豆瓣 API，去掉会真的往豆瓣同步。可以通过 `python sync_to_douban.py --help` 查看更多用法，比如限制只同步一定时间范围内的数据：
 
 ```sh
-python sync_to_douban.py \
+python3 sync_to_douban.py \
     --dry-run \
     --start-date 2022-01-01 \
     --end-date 2022-12-31 \
@@ -67,7 +67,7 @@ python sync_to_douban.py \
 如果只需要同步今天刚评价的内容：
 
 ```sh
-python sync_to_douban.py \
+python3 sync_to_douban.py \
     --dry-run \
     --start-date today \
     movie
