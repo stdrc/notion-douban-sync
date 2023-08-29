@@ -1,4 +1,5 @@
 import os
+import re
 import time
 import argparse
 import duckdb
@@ -10,8 +11,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DOUBAN_COOKIE = os.getenv("DOUBAN_COOKIE")
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+
+DOUBAN_COOKIE = os.getenv("DOUBAN_COOKIE")
+if not DOUBAN_COOKIE:
+    print("Please set valid DOUBAN_COOKIE in .env file")
+    exit(1)
+
+m = re.search(r"ck=(\w+)", DOUBAN_COOKIE)
+if not m:
+    print("Please set valid DOUBAN_COOKIE in .env file")
+    exit(1)
+DOUBAN_CK = m.group(1)
 
 
 def rate_on_douban(
@@ -29,13 +40,13 @@ def rate_on_douban(
         "X-Requested-With": "XMLHttpRequest",
     }
     form_data = {
-        "ck": "iGF7",
+        "ck": DOUBAN_CK,
         "interest": "collect",
         "rating": f"{rating_1_to_5}",
         "foldcollect": "F",
         "tags": "",
         "comment": comment,
-        "share-shuo": "douban" if share else "",
+        "share-shuo": "on" if share else "",
     }
     resp = requests.post(
         rate_url,
