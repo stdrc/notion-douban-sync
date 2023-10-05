@@ -64,7 +64,7 @@ class Review:
     latest_rating: str
     latest_rating_score: int  # from -2 to +2
     rating_merged: str
-    public_url: str
+    rating_merged_with_public_url: str
 
 
 SQL_GET_RATED = r"""
@@ -78,7 +78,10 @@ SELECT
         strftime(rating_date, '%Y-%m-%d') || ' ' || rating, '／'
         ORDER BY rating_date DESC
     ) as rating_merged,
-    first(public_url ORDER BY rating_date DESC) AS public_url
+    string_agg(
+        strftime(rating_date, '%Y-%m-%d') || ' ' || rating || ' ' || public_url, '／'
+        ORDER BY rating_date DESC
+    ) as rating_merged_with_public_url
 FROM reviews
 WHERE douban_url IS NOT NULL AND rating_date IS NOT NULL
 GROUP BY douban_url
@@ -127,6 +130,9 @@ def main():
         default=1.0,
         help="seconds to sleep between each request, default 1.0",
     )
+    parser.add_argument(
+        "--with-public-url", action="store_true", help="put public URL in the comment"
+    )
     args = parser.parse_args()
 
     start_date = parse_date(args.start_date, default=date(1970, 1, 1))
@@ -137,11 +143,16 @@ def main():
             continue
 
         douban_rating = review.latest_rating_score + 3  # douban rating is from 1 to 5
+        comment = (
+            review.rating_merged_with_public_url
+            if args.with_public_url
+            else review.rating_merged
+        )
         print(
             review.name,
             review.douban_id,
-            review.rating_merged,
             douban_rating,
+            comment,
             sep=", ",
             end="...",
         )
@@ -153,7 +164,7 @@ def main():
             args.media_type,
             review.douban_id,
             douban_rating,
-            review.rating_merged,
+            comment,
             not args.no_share,
         ):
             print("OK")

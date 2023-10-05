@@ -44,7 +44,7 @@ const ratingScoreMap = {
         let ratingDate = page.properties[ratingDateProp].date?.start || null;
         let rating = page.properties[ratingProp].select?.name || null;
         let ratingScore = rating ? ratingScoreMap[Array.from(rating)[0]] : null;
-        let publicUrl = page.public_url;
+        let publicUrl = page.public_url.replace(/\/[^\/]*-([0-9a-f]{32})$/, '/$1');
 
         console.log(`${name}, ${ratingDate}, ${rating}, ${ratingScore}`);
         reviews.push({
